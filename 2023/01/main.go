@@ -49,12 +49,14 @@ func Problem2() int {
 	for scanner.Scan() {
 		line := scanner.Text()
 		regex, _ := regexp.Compile(`(one|two|three|four|five|six|seven|eight|nine)|(\d){1}`)
+		reverse, _ := regexp.Compile(`(eno|owt|eerht|ruof|evif|xis|neves|thgie|enin)|(\d){1}`)
 		found := regex.FindAllString(line, -1)
+		foundReverse := reverse.FindAllString(line, -1)
 		switch {
 		case len(found) == 1:
 			calibrationValue, _ = strconv.Atoi(Convert(found[0]) + Convert(found[0]))
 		case len(found) >= 2:
-			calibrationValue, _ = strconv.Atoi(Convert(found[0]) + Convert(found[len(found)-1]))
+			calibrationValue, _ = strconv.Atoi(Convert(found[0]) + Convert(foundReverse[len(foundReverse)-1]))
 		}
 		totalCalibration += calibrationValue
 	}
@@ -63,23 +65,23 @@ func Problem2() int {
 
 func Convert(input string) string {
 	switch input {
-	case "one":
+	case "one", "eno":
 		return "1"
-	case "two":
+	case "two", "owt":
 		return "2"
-	case "three":
+	case "three", "eerht":
 		return "3"
-	case "four":
+	case "four", "ruof":
 		return "4"
-	case "five":
+	case "five", "evif":
 		return "5"
-	case "six":
+	case "six", "xis":
 		return "6"
-	case "seven":
+	case "seven", "neves":
 		return "7"
-	case "eight":
+	case "eight", "thgie":
 		return "8"
-	case "nine":
+	case "nine", "enin":
 		return "9"
 	default:
 		return input
