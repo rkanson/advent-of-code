@@ -16,6 +16,8 @@ var green = regexp.MustCompile(`(\d{1,2}).?(green)`)
 func main() {
 	fmt.Println("Problem 1")
 	fmt.Println(Problem1())
+	fmt.Println("Problem 2")
+	fmt.Println(Problem2())
 }
 
 func Problem1() int {
@@ -47,4 +49,27 @@ func GameCanExist(found []string, pattern string) bool {
 		}
 	}
 	return true
+}
+
+func Problem2() int {
+	total := 0
+	utils.LoopInput("input.txt", func(line string) {
+		minRed := MinToExist(red.FindAllString(line, -1))
+		minBlue := MinToExist(blue.FindAllString(line, -1))
+		minGreen := MinToExist(green.FindAllString(line, -1))
+		total += minRed * minBlue * minGreen
+	})
+	return total
+}
+
+func MinToExist(found []string) int {
+	highest := 0
+	for _, v := range found {
+		digit := digits.FindAllString(v, -1)
+		value, _ := strconv.Atoi(digit[0])
+		if value > highest {
+			highest = value
+		}
+	}
+	return highest
 }
